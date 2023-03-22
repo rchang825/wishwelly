@@ -125,13 +125,20 @@ const User = mongoose.model("user", userSchema);
 
 
 app.get("/", (req, res) => {
-    //res.send("<h1>Home<h1>");
+    res.render("home", {});
+});
+
+app.get("/showList", (req, res) => {
     res.render("display", {wishwelly: wish1, lists: wish1.lists});
 });
 
+app.get("/about", (req, res) => {
+    res.render("about", {});
+});
 
-
-
+app.get("/signin", (req, res) => {
+    res.send("Sign in page");
+});
 
 
 

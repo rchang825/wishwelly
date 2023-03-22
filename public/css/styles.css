@@ -1,7 +1,11 @@
+.logo-container {
+    width: 30px;
+    height: 24px;
+}
 .image-container {
-    width: 80%;
-    height: 60%;
-    margin: 10%;
+    width: 100%;
+    height: 80%;
+    /*margin: 10%;
     /*border-style: solid;*/
 }
 
@@ -10,15 +14,34 @@
     height: 100%;
     object-fit: cover;
 }
-
+.details-container {
+    height: 20%;
+    margin: 5%;
+}
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
 }
 .item-details {
     margin: 0 10%;
 }
+.store {
+    margin-top: 3%;
+}
+.center-text {
+    text-align: center;
+}
 footer {
     text-align: center;
     border-style: solid none none none;
+    bottom: 0;
+}
+.margins {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto; 
+}
+.no-flex-grow {
+    flex-grow: 0;
 }
