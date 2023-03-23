@@ -1,24 +1,58 @@
 <%- include("partials/header") -%>
 
-<h1 class="center-text"> <%= wishwelly.title %></h1>
-<div class="margins">
-    <% lists.forEach(list => { %>
-    <h3 class="store"><%= list.storeName %></h3>
-    <div class="grid-container">
-        <% list.items.forEach(item => { %>
-            <div class="grid-item">
-                <div class="image-container">
-                    <img class="image" src= "<%= item.imgURL %>" alt="NA">
-                </div>
-                <div class="details-container">
-                    <h5 class=item-details><%= item.name %></h5>
-                    <p class=item-details><%= item.price %></p>      
-                </div>    
+<h1 class="center-text list-title"> <%= wishwelly.title %></h1>
+<div class="inline-flex">
+    <form method="post" action="/showList" class="filter flex-column">
+        <h5>Filter By</h5>
+        <div class="flex-column filter-option">
+            <label class="label-title" for="store-name">Store Name</label>
+            <select name="store-name">
+                <option value="amazon">Amazon</option>
+                <option value="nordstrom">Nordstrom</option>
+                <option value="sephora">Sephora</option>
+                <option value="etsy">Etsy</option>
+            </select>
+        </div>
+    
+        <div class="checkbox-container flex-column filter-option">
+            <label class="label-title">Tag</label>
+            <div>
+                <input type="checkbox" name="tag" id="clothing" value="clothing">
+                <label for="clothing">Clothing</label>            
             </div>
-        <% }); %>
+            <div>
+                <input type="checkbox" name="tag" id="electronics" value="electronics">
+                <label for="electronics">Electronics</label>        
+            </div>
+            <div>
+                <input type="checkbox" name="tag" id="decor" value="decor">
+                <label for="decor">Decor</label>            
+            </div>
+        </div>
+    </form>
+    
+    <div class="body">
+        <div class="margins">
+            <% lists.forEach(list => { %>
+            <h3 class="store"><%= list.storeName %></h3>
+            <div class="grid-container">
+                <% list.items.forEach(item => { %>
+                    <div class="grid-item">
+                        <div class="image-container">
+                            <img class="image" src= "<%= item.imgURL %>" alt="NA">
+                        </div>
+                        <div class="details-container">
+                            <h5 class=item-details><%= item.name %></h5>
+                            <p class=item-details><%= item.price %></p>      
+                        </div>    
+                    </div>
+                <% }); %>
+            </div>
+            <% }); %>
+        </div>
     </div>
-    <% }); %>
 </div>
+
 
 
 <%- include("partials/footer") -%>
