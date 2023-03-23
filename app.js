@@ -55,9 +55,9 @@ const userSchema = {
 };
 const User = mongoose.model("user", userSchema);
 //encrypt password!
-
+test();
 //testDisplay();
-
+function test() {
     const tag1 = new Tag({
         name: "clothing"
     });
@@ -72,19 +72,19 @@ const User = mongoose.model("user", userSchema);
         name: "Ring Light",
         price: 40,
         //tags: defaultTags
-        imgURL: "./media/A.jpg"
+        imgURL: "/media/A.jpg"
     });
     const item2 = new Item({
         name: "Gift card",
         price: 100,
         tags: exTags,
-        imgURL: "./media/B.jpeg"
+        imgURL: "/media/B.jpeg"
     });
     const item3 = new Item({
         name: "Sun catcher",
         price: 13.50,
         //tags: defaultTags
-        imgURL: "./media/C.jpeg"
+        imgURL: "/media/C.jpeg"
     });
 
     const exItems = [item1, item2, item3];
@@ -98,25 +98,27 @@ const User = mongoose.model("user", userSchema);
     list1.items.push(item1);
     list1.items.push(item3);
     list1.items.push(item2);
-    list1.save();
+    //list1.save();
     const list2 = new List({
         url: "nordstrom.com",
         storeName: "Nordstrom",
         items: exItems
     });
-    list2.save();
+    //list2.save();
     const wish1 = new Wishwelly({
         slug: "wish1",
         title: "Wishwelly 1",
         lists: [list1, list2]
     });
-    wish1.save();
+    //wish1.save();
     const user1 = new User ({
         email: "user1@w.com",
         password: "qwerty",
         wishwellys: [wish1]
     });
-    user1.save();
+    //user1.save();
+}
+
 
 
 
@@ -128,8 +130,25 @@ app.get("/", (req, res) => {
     res.render("home", {});
 });
 
-app.get("/showList", (req, res) => {
-    res.render("display", {wishwelly: wish1, lists: wish1.lists});
+app.get("/collections/:slug", async (req, res) => {
+    const requestedSlug = req.params.slug;
+    const wish = await Wishwelly.findOne({slug: requestedSlug});
+    const stores = req.query.store;
+
+    let lists = wish.lists;
+    console.log("query: ", req.query);
+    console.log("store=" + stores);
+    console.log(stores);
+    if (stores) {
+        lists = lists.filter(list => stores.includes(list.storeName));   
+    }
+    const storeFilters = wish.lists.map(list => list.storeName);
+    res.render("display", {
+        wishwelly: wish, 
+        lists: lists,
+        storeFilters: storeFilters,
+        selectedStores: stores
+    });
 });
 
 app.get("/about", (req, res) => {
@@ -139,6 +158,14 @@ app.get("/about", (req, res) => {
 app.get("/signin", (req, res) => {
     res.send("Sign in page");
 });
+
+app.post("/showList", (req,res) => {
+
+});
+
+
+
+
 
 
 

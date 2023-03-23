@@ -40,7 +40,7 @@ footer {
     padding: 1%;
 }
 .margins {
-    width: 90%;
+    width: 95%;
     margin-left: auto;
     margin-right: auto; 
 }
@@ -67,6 +67,6 @@ form.filter {
 h1.list-title {
     margin-top: 2%;
 }
-.filter-option {
+.filter-section {
     margin-bottom: 5%;
 }
