@@ -4,30 +4,43 @@
 <div class="inline-flex">
     <form method="post" action="/showList" class="filter flex-column">
         <h5>Filter By</h5>
-        <div class="flex-column filter-option">
-            <label class="label-title" for="store-name">Store Name</label>
-            <select name="store-name">
-                <option value="amazon">Amazon</option>
-                <option value="nordstrom">Nordstrom</option>
-                <option value="sephora">Sephora</option>
-                <option value="etsy">Etsy</option>
-            </select>
-        </div>
-    
-        <div class="checkbox-container flex-column filter-option">
-            <label class="label-title">Tag</label>
+        <div class="checkbox-container flex-column">
+            <div class="filter-section">
+            <label class="label-title">Store Name</label>
             <div>
-                <input type="checkbox" name="tag" id="clothing" value="clothing">
-                <label for="clothing">Clothing</label>            
+                <input onChange="this.form.submit()" type="checkbox" name="store" id="amazon" value="amazon">
+                <label for="amazon">Amazon</label>            
             </div>
             <div>
-                <input type="checkbox" name="tag" id="electronics" value="electronics">
-                <label for="electronics">Electronics</label>        
+                <input onChange="this.form.submit()" type="checkbox" name="store" id="nordstrom" value="nordstrom">
+                <label for="nordstrom">Nordstrom</label>            
             </div>
             <div>
-                <input type="checkbox" name="tag" id="decor" value="decor">
-                <label for="decor">Decor</label>            
+                <input onChange="this.form.submit()" type="checkbox" name="store" id="sephora" value="sephora">
+                <label for="sephora">Sephora</label>            
             </div>
+            <div>
+                <input onChange="this.form.submit()" type="checkbox" name="store" id="etsy" value="etsy">
+                <label for="etsy">Etsy</label>            
+            </div>                
+            </div>
+
+            <div class="filter-section">
+                <label class="label-title">Tag</label>
+                <div>
+                    <input onChange="this.form.submit()" type="checkbox" name="tag" id="clothing" value="clothing">
+                    <label for="clothing">Clothing</label>            
+                </div>
+                <div>
+                    <input onChange="this.form.submit()" type="checkbox" name="tag" id="electronics" value="electronics">
+                    <label for="electronics">Electronics</label>        
+                </div>
+                <div>
+                    <input onChange="this.form.submit()" type="checkbox" name="tag" id="decor" value="decor">
+                    <label for="decor">Decor</label>            
+                </div>
+            </div>
+
         </div>
     </form>
     
