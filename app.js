@@ -26,39 +26,41 @@ app.get("/", (req, res) => {
 
 app.get("/collections/:slug", async (req, res) => {
     const requestedSlug = req.params.slug;
-    const wish = await Wishwelly.findOne({slug: requestedSlug});
-    const stores = req.query.store;
+    const wish = await Wishwelly.findOne({slug: requestedSlug}).lean();
+    const selectedStores = req.query.store;
 
 
-    let lists = wish.lists;
-    if (stores) {
-        lists = lists.filter(list => stores.includes(list.storeName));   
+    let stores = wish.stores;
+    if (selectedStores) {
+        stores = stores.filter(store => selectedStores.includes(store.name));   
     }
-    const storeFilters = wish.lists.map(list => list.storeName);
+    const storeFilters = wish.stores.map(store => store.name);
     res.render("display", {
         wishwelly: wish, 
-        lists: lists,
+        stores: stores,
         storeFilters: storeFilters,
-        selectedStores: stores
+        selectedStores: selectedStores
     });
+
 });
 
 app.get("/collections/:slug/edit", async (req, res) => {
     const requestedSlug = req.params.slug;
     const wish = await Wishwelly.findOne({slug: requestedSlug});
-    const stores = req.query.store;
+    const selectedStores = req.query.store;
     
 
-    let lists = wish.lists;
-    if (stores) {
-        lists = lists.filter(list => stores.includes(list.storeName));   
+    let stores = wish.stores;
+    if (selectedStores) {
+        stores = stores.filter(store => selectedStores.includes(store.name));   
     }
-    const storeFilters = wish.lists.map(list => list.storeName);
+    const storeFilters = wish.stores.map(store => store.name);
     res.render("edit", {
         wishwelly: wish, 
-        lists: lists,
+        stores: stores,
         storeFilters: storeFilters,
-        selectedStores: stores
+        selectedStores: selectedStores,
+        slug: requestedSlug
     });
 });
 
@@ -70,7 +72,8 @@ app.get("/collections/:slug/new", async (req, res) => {
     //const redirectLink = "/collections/" + requestedSlug
     res.render("new", {
         wishwelly: wish, 
-        lists: [list]
+        lists: [list], 
+        slug: requestedSlug
     });
 });
 
@@ -82,13 +85,15 @@ app.get("/signin", (req, res) => {
     res.send("Sign in page");
 });
 
-app.post("/showList", (req,res) => {
-
+app.post("/items/:itemID", async (req, res) => {
+    const itemID = req.params.itemID;
+    console.log("grabbed ", req.body.editName);
+    const newName = req.body.editName;
+    console.log("new name ", newName);
+    const item = await Item.findByIdAndUpdate(itemID, {altName: newName}, {new: true});
+    console.log("alt name of ", item.name, " is ", item.altName);
+    res.redirect("/collections/wish1");
 });
-
-
-
-
 
 
 

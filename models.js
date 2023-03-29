@@ -13,7 +13,8 @@ const itemSchema = {
     tags: [tagSchema],
     //URLlistID: String,
     imgURL: String,
-    link: String
+    link: String,
+    altName: String
 };
 const Item = mongoose.model("item", itemSchema);
 
@@ -25,14 +26,19 @@ const listSchema = {
     items: [itemSchema]
 };
 const List = mongoose.model("list", listSchema);
-
+//stores that could have multiple lists
+const storeSchema = {
+    name: String,
+    lists: [listSchema]
+};
+const Store = mongoose.model("store", storeSchema);
 //wishlists {slug, userID, title, tags}
 const wishwellySchema = {
     slug: String,
     //userID: String,
     title: String,
     //tags: [],
-    lists: [listSchema]
+    stores: [storeSchema]
 };
 const Wishwelly = mongoose.model("wishwelly", wishwellySchema);
 
@@ -45,4 +51,4 @@ const userSchema = {
 const User = mongoose.model("user", userSchema);
 //encrypt password!
 
-module.exports = {Tag, Item, List, Wishwelly, User};
+module.exports = {Tag, Item, List, Store, Wishwelly, User};

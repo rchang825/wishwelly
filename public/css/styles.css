@@ -71,7 +71,7 @@ h1.list-title {
 .filter-section {
     margin-bottom: 5%;
 }
-a {
+a.noDecor {
     text-decoration: none;
     color: black;
 }

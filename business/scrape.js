@@ -1,6 +1,6 @@
 const axios = require('axios');
 const cheerio = require("cheerio");
-const {Item, List} = require("../models");
+const {Item, List, Store} = require("../models");
 
 async function scrape(url) {
     const response = await axios.get(url);
@@ -14,7 +14,7 @@ async function scrape(url) {
         item.link = "https://amazon.com" + $(element).find(".a-list-item div a.a-link-normal").prop("href");
         return item;
     });
-    console.log("scrapedItems", scrapedItems);
+    //console.log("scrapedItems", scrapedItems);
     return scrapedItems;
 }
 
@@ -26,7 +26,8 @@ async function scrapeAndCreateList(listURL) {
             name: scrapedItem.name,
             price: scrapedItem.price,
             imgURL: scrapedItem.imgURL,
-            link: scrapedItem.link
+            link: scrapedItem.link,
+            altName: scrapedItem.name
         });
         items.push(item);
         await item.save();
@@ -37,13 +38,27 @@ async function scrapeAndCreateList(listURL) {
         storeName: "Amazon",
         items: items
     });
-    list.save();
-    return list;
+    list.save();    
+    let store = await Store.findOne({name: list.storeName});
+    if(store !== null) {
+        console.log(store.name, "exists");
+        store.lists.push(list);
+    }
+    else {
+        store = new Store({
+            name: list.storeName,
+            lists: [list]
+        });
+    }
+    store.save();
+    return [store, list];
 }
 
 async function scrapeToWishwelly(listURL, wishwelly) {
-    const list = await scrapeAndCreateList(listURL);
-    wishwelly.lists.push(list);
+    const scrapedData = await scrapeAndCreateList(listURL);
+    const store = scrapedData[0];
+    const list = scrapedData[1];
+    wishwelly.stores.push(store);
     wishwelly.save();
     return list;
 }

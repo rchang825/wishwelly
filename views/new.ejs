@@ -15,8 +15,12 @@
 <div>
     <p>
         <br>
-        Here are the items from the list that was just added
+        Here are all the items from the selected list
         <br>
+    </p>
+    <p>
+        <% const link = "/collections/" + slug + "/edit"; %>
+        <a href= <%= link %> >See full wishlist</a>
     </p>
 </div>
 <div class="inline-flex">
@@ -27,14 +31,14 @@
             <div class="grid-container">
                 <% list.items.forEach(item => { %>
                     <div class="grid-item">
-                        <a href= <%= item.link %> target="_blank">
+                        <a class="noDecor" href= <%= item.link %> target="_blank">
                             <div class="image-container">
                                 <img class="image" src= "<%= item.imgURL %>" alt="NA">
                             </div>                            
                         </a>
 
                         <div class="details-container">
-                            <a href= <%= item.link %> target="_blank">
+                            <a class="noDecor" href= <%= item.link %> target="_blank">
                                 <h5 class=item-details><%= item.name %></h5>
                             </a>
                             

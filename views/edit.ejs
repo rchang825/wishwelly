@@ -1,7 +1,10 @@
 <%- include("partials/header") -%>
 
 <h1 class="center-text list-title"> <%= wishwelly.title %></h1>
-
+<% const link = "/collections/" + slug; %>
+<p>
+    <a href=<%= link %>>View public wishlist</a>
+</p>
 <div class="edit">
     <form method="get" action="./new">
         <div>
@@ -48,30 +51,32 @@
 
     <div class="body">
         <div class="margins">
-            <% lists.forEach(list => { %>
-            <h3 class="store"><%= list.storeName %></h3>
-            <div class="grid-container">
-                <% list.items.forEach(item => { %>
-                    <div class="grid-item">
-                        <a href= <%= item.link %> target="_blank">
-                            <div class="image-container">
-                                <img class="image" src= "<%= item.imgURL %>" alt="NA">
-                            </div>                            
-                        </a>
-
-                        <div class="details-container">
-                            <a href= <%= item.link %> target="_blank">
-                                <h5 class=item-details><%= item.name %></h5>
+            <% stores.forEach(store => { %>
+                <h3 class="store"><%= store.name %></h3>
+                <% store.lists.forEach(list => { %>
+                    <div class="grid-container">
+                    <% list.items.forEach(item => { %>
+                        <div class="grid-item">
+                            <a class="noDecor" href= <%= item.link %> target="_blank">
+                                <div class="image-container">
+                                    <img class="image" src= "<%= item.imgURL %>" alt="NA">
+                                </div>                            
                             </a>
-                            
-                            <p class=item-details>$<%= item.price %></p>      
-                        </div>    
+                            <div class="details-container">
+                                <form method="post" id="editItem" action="/items/<%= item._id %>">
+                                    <textarea name="editName" class="item-details"><%= item.name %></textarea>                             
+                                    <p class=item-details>$<%= item.price %></p> 
+                                    <input type="submit" value="Save"/>     
+                                </form>
+                            </div>    
+                        </div>
+                    <% }); %>
                     </div>
                 <% }); %>
-            </div>
             <% }); %>
         </div>
     </div>
 </div>
+
 
 <%- include("partials/footer") -%>

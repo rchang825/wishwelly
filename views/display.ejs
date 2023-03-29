@@ -37,27 +37,29 @@
 
     <div class="body">
         <div class="margins">
-            <% lists.forEach(list => { %>
-            <h3 class="store"><%= list.storeName %></h3>
-            <div class="grid-container">
-                <% list.items.forEach(item => { %>
-                    <div class="grid-item">
-                        <a href= <%= item.link %> target="_blank">
-                            <div class="image-container">
-                                <img class="image" src= "<%= item.imgURL %>" alt="NA">
-                            </div>                            
-                        </a>
-
-                        <div class="details-container">
-                            <a href= <%= item.link %> target="_blank">
-                                <h5 class=item-details><%= item.name %></h5>
+            <% stores.forEach(store => { %>
+                <h3 class="store"><%= store.name %></h3>
+                <% store.lists.forEach(list => { %>
+                    <div class="grid-container">
+                    <% list.items.forEach(item => { %>
+                        <div class="grid-item">
+                            <a class="noDecor" href= <%= item.link %> target="_blank">
+                                <div class="image-container">
+                                    <img class="image" src= "<%= item.imgURL %>" alt="NA">
+                                </div>                            
                             </a>
-                            
-                            <p class=item-details>$<%= item.price %></p>      
-                        </div>    
-                    </div>
+
+                            <div class="details-container">
+                                <a class="noDecor" href= <%= item.link %> target="_blank">
+                                    <h5 class=item-details><%= item.altName %></h5>
+                                </a>
+                                
+                                <p class=item-details>$<%= item.price %></p>      
+                            </div>    
+                        </div>
+                    <% }); %>
+                    </div>  
                 <% }); %>
-            </div>
             <% }); %>
         </div>
     </div>
