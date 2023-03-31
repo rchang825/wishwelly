@@ -31,6 +31,7 @@ app.get("/collections/:slug", async (req, res) => {
 
 
     let stores = wish.stores;
+    //console.log("stores:", stores);
     if (selectedStores) {
         stores = stores.filter(store => selectedStores.includes(store.name));
     }

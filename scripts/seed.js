@@ -22,7 +22,10 @@ main();
 async function scrapeAndCreate() {
     const listURL = "https://www.amazon.com/hz/wishlist/ls/2RAF9Y78RJ8DW?ref_=wl_share";
 
-    const store = await scrapeAndCreateList(listURL)[0];
+    let store = await scrapeAndCreateList(listURL);
+    store = store[0];
+
+    //console.log("seed.js store: ", store);
     const wish1 = new Wishwelly({
         slug: "wish1",
         title: "Wishwelly 1",

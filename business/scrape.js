@@ -40,8 +40,9 @@ async function scrapeAndCreateList(listURL) {
     });
     list.save();    
     let store = await Store.findOne({name: list.storeName});
+    console.log("looking for existing store: ", store);
     if(store !== null) {
-        console.log(store.name, "exists");
+        //console.log(store.name, "exists");
         store.lists.push(list);
     }
     else {
@@ -51,12 +52,14 @@ async function scrapeAndCreateList(listURL) {
         });
     }
     store.save();
+    //console.log("created store: ", store);
     return [store, list];
 }
 
 async function scrapeToWishwelly(listURL, wishwelly) {
     const scrapedData = await scrapeAndCreateList(listURL);
     const store = scrapedData[0];
+    console.log("scrapeToWishwelly store: ", store);
     const list = scrapedData[1];
     wishwelly.stores.push(store);
     wishwelly.save();
