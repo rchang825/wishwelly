@@ -32,9 +32,9 @@ app.get("/collections/:slug", async (req, res) => {
 
     let stores = wish.stores;
     if (selectedStores) {
-        stores = stores.filter(store => selectedStores.includes(store.name));   
+        stores = stores.filter(store => selectedStores.includes(store.name));
     }
-    const storeFilters = wish.stores.map(store => store.name);
+    const storeFilters = stores.map(store => store.name);
     res.render("display", {
         wishwelly: wish, 
         stores: stores,
