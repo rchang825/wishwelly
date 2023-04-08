@@ -4,7 +4,7 @@ const axios = require('axios');
 const cheerio = require("cheerio");
 
 const {scrapeAndCreateList} = require("../business/scrape");
-const {Tag, Item, List, Store, Wishwelly, User} = require("../models");
+const {Tag, Item, List, Wishwelly, User} = require("../models");
 
 async function main() {
     await mongoose.connect("mongodb://localhost:27017/wishwellyDB");
@@ -22,14 +22,13 @@ main();
 async function scrapeAndCreate() {
     const listURL = "https://www.amazon.com/hz/wishlist/ls/2RAF9Y78RJ8DW?ref_=wl_share";
 
-    let store = await scrapeAndCreateList(listURL);
-    store = store[0];
+    const list = await scrapeAndCreateList(listURL);
 
     //console.log("seed.js store: ", store);
     const wish1 = new Wishwelly({
         slug: "wish1",
         title: "Wishwelly 1",
-        stores: [store]
+        lists: [list]
     });
     wish1.save();
 }

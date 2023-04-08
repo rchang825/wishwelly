@@ -1,9 +1,11 @@
 const axios = require('axios');
 const cheerio = require("cheerio");
-const {Item, List, Store} = require("../models");
+const {Item, List} = require("../models");
 
 async function scrape(url) {
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+        headers: {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"}
+    });
     const $ = cheerio.load(response.data);
     const $items = $("ul#g-items li.g-item-sortable");
     const scrapedItems = $items.toArray().map((element) => {
@@ -30,7 +32,7 @@ async function scrapeAndCreateList(listURL) {
             altName: scrapedItem.name
         });
         items.push(item);
-        await item.save();
+        //await item.save();
     });
 
     const list = new List({
@@ -38,30 +40,15 @@ async function scrapeAndCreateList(listURL) {
         storeName: "Amazon",
         items: items
     });
-    list.save();    
-    let store = await Store.findOne({name: list.storeName});
-    console.log("looking for existing store: ", store);
-    if(store !== null) {
-        //console.log(store.name, "exists");
-        store.lists.push(list);
-    }
-    else {
-        store = new Store({
-            name: list.storeName,
-            lists: [list]
-        });
-    }
-    store.save();
+    //list.save();   
     //console.log("created store: ", store);
-    return [store, list];
+    return list;
 }
 
 async function scrapeToWishwelly(listURL, wishwelly) {
     const scrapedData = await scrapeAndCreateList(listURL);
-    const store = scrapedData[0];
-    console.log("scrapeToWishwelly store: ", store);
-    const list = scrapedData[1];
-    wishwelly.stores.push(store);
+    const list = scrapedData;
+    wishwelly.lists.push(list);
     wishwelly.save();
     return list;
 }
