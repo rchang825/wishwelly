@@ -38,7 +38,12 @@
     <div class="body">
         <div class="margins">
                 <% lists.forEach(list => { %>
-                    <h3 class="store"><%= list.storeName %></h3>
+                    <div class="store-header">
+                        <h3 class="store"><%= list.storeName %></h3>
+                        <a href=<%= list.url %> target="_blank"><%= list.url %></a>                        
+                    </div>
+
+ 
                     <div class="grid-container">
                     <% list.items.forEach(item => { %>
                         <div class="grid-item">

@@ -40,7 +40,7 @@ async function scrapeAndCreateList(listURL) {
         storeName: "Amazon",
         items: items
     });
-    //list.save();   
+    await list.save();   
     //console.log("created store: ", store);
     return list;
 }
@@ -49,7 +49,7 @@ async function scrapeToWishwelly(listURL, wishwelly) {
     const scrapedData = await scrapeAndCreateList(listURL);
     const list = scrapedData;
     wishwelly.lists.push(list);
-    wishwelly.save();
+    await wishwelly.save();
     return list;
 }
 

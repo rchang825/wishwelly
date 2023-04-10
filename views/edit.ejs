@@ -2,21 +2,21 @@
 
 <h1 class="center-text list-title"> <%= wishwelly.title %></h1>
 <% const link = "/collections/" + slug; %>
-<p>
-    <a href=<%= link %>>View public wishlist</a>
-</p>
 <div class="edit">
+    <p>
+        <a href=<%= link %>>View public wishlist</a>
+    </p>
+
     <form method="get" action="./new">
         <div>
             <label for="newLink">Import new list</label>
             <input type="text" id="newLink" name="newLink" placeholder="Link to new list" required>
             <input type="submit" value="Add list">
         </div>
-
     </form>
 </div>
 
-<div class="inline-flex">
+<div class="inline-flex full-width">
     <form method="get" class="filter flex-column">
         <h5>Filter By</h5>
         <div class="checkbox-container flex-column">
@@ -52,7 +52,10 @@
     <div class="body">
         <div class="margins">
                 <% lists.forEach(list => { %>
-                    <h3 class="store"><%= list.storeName %></h3>
+                    <div class="store-header">
+                        <h3 class="store"><%= list.storeName %></h3>
+                        <a href=<%= list.url %> target="_blank"><%= list.url %></a>                        
+                    </div>
                     <div class="grid-container">
                     <% list.items.forEach(item => { %>
                         <div class="grid-item">
@@ -63,9 +66,11 @@
                             </a>
                             <div class="details-container">
                                 <form method="post" id="editItem" action="/<%= list._id %>/<%= item._id %>">
-                                    <textarea name="editName" class="item-details"><%= item.name %></textarea>                             
-                                    <p class=item-details>$<%= item.price %></p> 
-                                    <input type="submit" value="Save"/>     
+                                    <textarea name="editName" class="item-details center"><%= item.altName %></textarea> 
+                                    <div class="item-footer">
+                                        <p>$<%= item.price %></p> 
+                                        <input type="submit" value="Save"/> 
+                                    </div>                            
                                 </form>
                             </div>    
                         </div>

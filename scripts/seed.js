@@ -28,7 +28,7 @@ async function scrapeAndCreate() {
     const wish1 = new Wishwelly({
         slug: "wish1",
         title: "Wishwelly 1",
-        lists: [list]
+        lists: [list._id]
     });
-    wish1.save();
+    await wish1.save();
 }

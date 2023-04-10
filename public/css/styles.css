@@ -60,10 +60,10 @@ footer {
 }
 form.filter {
     margin: 3% 2%;
-    width: 15%;
+    width: 10%;
 }
 .body {
-    width: 85%;
+    width: 90%;
 }
 h1.list-title {
     margin-top: 2%;
@@ -77,4 +77,23 @@ a.noDecor {
 }
 .edit {
     display: block;
+    margin-left: 15.8%;
+}
+.full-width {
+    width: 100%;
+}
+.store-header {
+    padding-bottom: 2%;
+}
+.item-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+    align-items: baseline;
+}
+textarea.item-details {
+    display: block;
+    margin: 5% auto;
+    width: 90%;
 }

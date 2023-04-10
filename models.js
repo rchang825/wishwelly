@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const tagSchema = {
     name: String
 };
-const Tag = mongoose.model("tag", tagSchema);
+const Tag = mongoose.model("Tag", tagSchema);
 
 //items {name, price, tags, URLlistID, imgURL}
 const itemSchema = {
@@ -16,7 +16,7 @@ const itemSchema = {
     link: String,
     altName: String
 };
-const Item = mongoose.model("item", itemSchema);
+const Item = mongoose.model("Item", itemSchema);
 
 //URLlists {url, storeName, wishlistID}
 const listSchema = {
@@ -25,16 +25,16 @@ const listSchema = {
     //wishwellyID: String,
     items: [itemSchema]
 };
-const List = mongoose.model("list", listSchema);
+const List = mongoose.model("List", listSchema);
 //wishlists {slug, userID, title, tags}
 const wishwellySchema = {
     slug: String,
     //userID: String,
     title: String,
     //tags: [],
-    lists: [listSchema]
+    lists: [{type: mongoose.Schema.Types.ObjectId, ref: "List"}]
 };
-const Wishwelly = mongoose.model("wishwelly", wishwellySchema);
+const Wishwelly = mongoose.model("Wishwelly", wishwellySchema);
 
 //users {email, password}
 const userSchema = {
@@ -42,7 +42,7 @@ const userSchema = {
     password: String,
     wishwellys: [wishwellySchema]
 };
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 //encrypt password!
 
 module.exports = {Tag, Item, List, Wishwelly, User};

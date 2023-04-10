@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 
 app.get("/collections/:slug", async (req, res) => {
     const requestedSlug = req.params.slug;
-    const wish = await Wishwelly.findOne({slug: requestedSlug});
+    const wish = await Wishwelly.findOne({slug: requestedSlug}).populate("lists");
     const stores = req.query.store;
 
 
@@ -35,7 +35,8 @@ app.get("/collections/:slug", async (req, res) => {
     if (stores) {
         lists = lists.filter(list => stores.includes(list.storeName));
     }
-    const storeFilters = lists.map(list => list.storeName);
+    const storeNames = lists.map(list => list.storeName);
+    const storeFilters = new Set(storeNames);
     res.render("display", {
         wishwelly: wish, 
         lists: lists,
@@ -47,7 +48,7 @@ app.get("/collections/:slug", async (req, res) => {
 
 app.get("/collections/:slug/edit", async (req, res) => {
     const requestedSlug = req.params.slug;
-    const wish = await Wishwelly.findOne({slug: requestedSlug});
+    const wish = await Wishwelly.findOne({slug: requestedSlug}).populate("lists");
     const stores = req.query.store;
     
 
@@ -55,7 +56,8 @@ app.get("/collections/:slug/edit", async (req, res) => {
     if (stores) {
         lists = lists.filter(list => stores.includes(list.storeName));   
     }
-    const storeFilters = wish.lists.map(list => list.storeName);
+    const storeNames = lists.map(list => list.storeName);
+    const storeFilters = new Set(storeNames);
     res.render("edit", {
         wishwelly: wish, 
         lists: lists,
@@ -67,7 +69,7 @@ app.get("/collections/:slug/edit", async (req, res) => {
 
 app.get("/collections/:slug/new", async (req, res) => {
     const requestedSlug = req.params.slug;
-    const wish = await Wishwelly.findOne({slug: requestedSlug});
+    const wish = await Wishwelly.findOne({slug: requestedSlug}).populate("lists");
     const newLink = req.query.newLink;
     const list = await scrapeToWishwelly(newLink, wish);
     //const redirectLink = "/collections/" + requestedSlug
@@ -89,23 +91,21 @@ app.get("/signin", (req, res) => {
 app.post("/:listID/:itemID", async (req, res) => {
     const itemID = req.params.itemID;
     const listID = req.params.listID;
-    console.log("grabbed ", req.body.editName);
     const newName = req.body.editName;
-    console.log("new name ", newName);
-    let list = await List.find({"_id":listID, "items._id":itemID});
-    list = list;
-    console.log("found list with item:", list);
+    let list = await List.findOne({"_id":listID});
+
+    // const list = await List.findOneAndUpdate({_id: listID, "items._id": itemID}, { $set: {"items.$.altName": newName}}, { new: true });
+
+
     const item = list.items.id(itemID);
-    const newItem = {...item};
-    newItem.altName = newName;
-    item.set(newItem);
+    item.altName = newName;
     await list.save();
-    console.log("updated item alt name:", item.altName);
-    console.log("found list with item:", list);
-    //const item = await Item.findByIdAndUpdate(itemID, {altName: newName}, {new: true});
-    //console.log("alt name of ", item.name, " is ", item.altName);
     res.redirect("/collections/wish1");
 });
+
+
+
+
 
 
 
