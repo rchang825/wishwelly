@@ -64,12 +64,12 @@
                                     <img class="image" src= "<%= item.imgURL %>" alt="NA">
                                 </div>                            
                             </a>
-                            <div class="details-container">
-                                <form method="post" id="editItem" action="/<%= list._id %>/<%= item._id %>">
-                                    <textarea name="editName" class="item-details center"><%= item.altName %></textarea> 
+                            <div id="edit-form" class="details-container">
+                                <form name="editItem" id="editItem" action="" data-update-path=<%= "/" + list._id + "/" + item._id %>>
+                                    <textarea id="editName" name="editName" class="item-details center"><%= item.altName %></textarea> 
                                     <div class="item-footer">
                                         <p>$<%= item.price %></p> 
-                                        <input type="submit" value="Save"/> 
+                                        <input id="submit-button" type="submit" value="Save"/> 
                                     </div>                            
                                 </form>
                             </div>    

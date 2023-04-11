@@ -100,7 +100,7 @@ app.post("/:listID/:itemID", async (req, res) => {
     const item = list.items.id(itemID);
     item.altName = newName;
     await list.save();
-    res.redirect("/collections/wish1");
+    //res.redirect("/collections/wish1");
 });
 
 
