@@ -20,15 +20,13 @@ main();
     link: "https:// direct link from wishlist"
 */
 async function scrapeAndCreate() {
-    const listURL = "https://www.amazon.com/hz/wishlist/ls/2RAF9Y78RJ8DW?ref_=wl_share";
-
-    const list = await scrapeAndCreateList(listURL);
-
     //console.log("seed.js store: ", store);
     const wish1 = new Wishwelly({
-        slug: "wish1",
-        title: "Wishwelly 1",
-        lists: [list._id]
+        slug: "wish",
+        title: "My Wishwelly",
+        lists: []
     });
     await wish1.save();
 }
+
+module.exports = {scrapeAndCreate};

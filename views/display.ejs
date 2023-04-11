@@ -1,6 +1,11 @@
 <%- include("partials/header") -%>
+<div>
+    <h1 class="center-text list-title"> <%= wishwelly.title %></h1>
+    <form method="post" action="/reset">
+        <input type="submit" value="Reset demo data"></input>
+    </form>
+</div>
 
-<h1 class="center-text list-title"> <%= wishwelly.title %></h1>
 <div class="inline-flex">
     <form method="get" class="filter flex-column">
         <h5>Filter By</h5>

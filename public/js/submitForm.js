@@ -1,6 +1,6 @@
 $(function () {
     console.log("jquery is running");
-    $("form").on("submit", function(e) {
+    $("form#editItem").on("submit", function(e) {
         e.preventDefault();
         console.log("button clicked!");
 

@@ -7,7 +7,8 @@ const axios = require('axios');
 const cheerio = require("cheerio");
 
 const {scrape, scrapeToWishwelly} = require("./business/scrape");
-const {Tag, Item, List, Wishwelly, User} = require("./models");
+const {Tag, Item, List, Wishwelly} = require("./models");
+const {scrapeAndCreate} = require("./scripts/seed");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -29,7 +30,10 @@ app.get("/collections/:slug", async (req, res) => {
     const wish = await Wishwelly.findOne({slug: requestedSlug}).populate("lists");
     const stores = req.query.store;
 
-
+    if(wish.lists.length === 0) {
+        res.redirect(requestedSlug + "/edit");
+        return;
+    }
     let lists = wish.lists;
     //console.log("stores:", stores);
     if (stores) {
@@ -78,6 +82,13 @@ app.get("/collections/:slug/new", async (req, res) => {
         lists: [list], 
         slug: requestedSlug
     });
+});
+
+app.post("/reset", async (req, res) => {
+    await Wishwelly.deleteMany({});
+    await List.deleteMany({});
+    await scrapeAndCreate();
+    res.redirect("/collections/wish");
 });
 
 app.get("/about", (req, res) => {
