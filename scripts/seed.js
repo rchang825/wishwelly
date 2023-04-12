@@ -27,6 +27,7 @@ async function scrapeAndCreate() {
         lists: []
     });
     await wish1.save();
+    return wish1;
 }
 
 module.exports = {scrapeAndCreate};

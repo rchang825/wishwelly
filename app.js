@@ -30,7 +30,7 @@ app.get("/collections/:slug", async (req, res) => {
     const wish = await Wishwelly.findOne({slug: requestedSlug}).populate("lists");
     const stores = req.query.store;
 
-    if(wish.lists.length === 0) {
+    if(wish === null || wish.lists.length === 0) {
         res.redirect(requestedSlug + "/edit");
         return;
     }
@@ -79,7 +79,7 @@ app.get("/collections/:slug/new", async (req, res) => {
     //const redirectLink = "/collections/" + requestedSlug
     res.render("new", {
         wishwelly: wish, 
-        lists: [list], 
+        list: list, 
         slug: requestedSlug
     });
 });
@@ -87,8 +87,9 @@ app.get("/collections/:slug/new", async (req, res) => {
 app.post("/reset", async (req, res) => {
     await Wishwelly.deleteMany({});
     await List.deleteMany({});
-    await scrapeAndCreate();
-    res.redirect("/collections/wish");
+    const wish = await scrapeAndCreate();
+    const redirectLink = "/collections/" + wish.slug;
+    res.redirect(redirectLink);
 });
 
 app.get("/about", (req, res) => {

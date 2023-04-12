@@ -1,9 +1,15 @@
 <%- include("partials/header") -%>
 <div>
     <h1 class="center-text list-title"> <%= wishwelly.title %></h1>
-    <form method="post" action="/reset">
-        <input type="submit" value="Reset demo data"></input>
-    </form>
+    <div class="toggled-buttons">
+        <form method="post" action="/reset">
+            <input type="submit" id="resetButton" value="Reset demo data"></input>
+            <a href= "/collections/<%= wishwelly.slug %>/edit" class="noDecor">
+                <input type="button" value="Edit items and add new lists"></input>
+            </a>
+        </form>
+    </div>
+
 </div>
 
 <div class="inline-flex">

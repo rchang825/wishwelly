@@ -97,3 +97,11 @@ textarea.item-details {
     margin: 5% auto;
     width: 90%;
 }
+.toggled-buttons {
+    display: flex;
+    justify-content: center;
+}
+.no-filter {
+    width: 85%;
+    margin: 0 auto;
+}

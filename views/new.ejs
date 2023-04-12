@@ -11,23 +11,23 @@
         </div>
 
     </form>
-</div>
-<div>
     <p>
         <br>
-        Here are all the items from the selected list
+        Here are all the items from the selected <%= list.storeName %> list
         <br>
     </p>
     <p>
-        <% const link = "/collections/" + slug + "/edit"; %>
-        <a href= <%= link %> >See and edit full wishlist</a>
+        <a href= "edit" class="noDecor">
+            <input type="button" value="Edit full wishlist"></input>
+        </a>
+        <a href="." class="noDecor">
+            <input type="button" value="View full wishlist"></input>
+        </a>
     </p>
 </div>
 <div class="inline-flex">
-    <div class="body">
+    <div class="body no-filter">
         <div class="margins">
-            <% lists.forEach(list => { %>
-            <h3 class="store"><%= list.storeName %></h3>
             <div class="grid-container">
                 <% list.items.forEach(item => { %>
                     <div class="grid-item">
@@ -47,7 +47,6 @@
                     </div>
                 <% }); %>
             </div>
-            <% }); %>
         </div>
     </div>
 </div>
