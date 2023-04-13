@@ -5,7 +5,7 @@
 <div class="edit">
     <% if (lists.length != 0) { %>
         <p>
-            <a href=<%= link %>>View public wishlist</a>
+            <a class="link-style" href=<%= link %>>View public wishlist</a>
         </p>
     <% } %>
 
@@ -14,50 +14,52 @@
         <div>
             <label for="newLink">Import new list</label>
             <input type="text" id="newLink" name="newLink" placeholder="Link to new list" value="https://www.amazon.com/hz/wishlist/ls/2RAF9Y78RJ8DW?ref_=wl_share" required>
-            <input type="submit" value="Add list">
+            <input class="button" type="submit" value="Add list">
         </div>
     </form>
 </div>
 
 <div class="inline-flex full-width">
-    <form method="get" class="filter flex-column">
-        <h5>Filter By</h5>
-        <div class="checkbox-container flex-column">
-            <div class="filter-section">
-            <label class="label-title">Store Name</label>
-            <% storeFilters.forEach(store => { %>
-                <div>
-                    <input onChange="this.form.submit()" type="checkbox" name="store" id=<%= store %> value=<%= store %> <%= selectedStores?.includes(store) ? "checked" : ""%>>
-                    <label for=<%= store %>> <%= store %></label>
+    <% if (lists.length != 0) { %>
+        <form method="get" class="filter flex-column">
+            <h5>Filter By</h5>
+            <div class="checkbox-container flex-column">
+                <div class="filter-section">
+                <label class="label-title">Store Name</label>
+                <% storeFilters.forEach(store => { %>
+                    <div>
+                        <input onChange="this.form.submit()" type="checkbox" name="store" id=<%= store %> value=<%= store %> <%= selectedStores?.includes(store) ? "checked" : ""%>>
+                        <label for=<%= store %>> <%= store %></label>
+                    </div>
+                <% }); %>            
                 </div>
-            <% }); %>            
-            </div>
 
-            <div class="filter-section">
-                <label class="label-title">Tag</label>
-                <div>
-                    <input onChange="this.form.submit()" type="checkbox" name="tag" id="clothing" value="clothing" >
-                    <label for="clothing">Clothing</label>            
-                </div>
-                <div>
-                    <input onChange="this.form.submit()" type="checkbox" name="tag" id="electronics" value="electronics">
-                    <label for="electronics">Electronics</label>        
-                </div>
-                <div>
-                    <input onChange="this.form.submit()" type="checkbox" name="tag" id="decor" value="decor">
-                    <label for="decor">Decor</label>            
-                </div>
-            </div>
+                <!-- <div class="filter-section">
+                    <label class="label-title">Tag</label>
+                    <div>
+                        <input onChange="this.form.submit()" type="checkbox" name="tag" id="clothing" value="clothing" >
+                        <label for="clothing">Clothing</label>            
+                    </div>
+                    <div>
+                        <input onChange="this.form.submit()" type="checkbox" name="tag" id="electronics" value="electronics">
+                        <label for="electronics">Electronics</label>        
+                    </div>
+                    <div>
+                        <input onChange="this.form.submit()" type="checkbox" name="tag" id="decor" value="decor">
+                        <label for="decor">Decor</label>            
+                    </div>
+                </div> -->
 
-        </div>
-    </form>
+            </div>
+        </form>
+    <% } %>
 
     <div class="body">
         <div class="margins">
                 <% lists.forEach(list => { %>
                     <div class="store-header">
                         <h3 class="store"><%= list.storeName %></h3>
-                        <a href=<%= list.url %> target="_blank"><%= list.url %></a>                        
+                        <a class="link-style" href=<%= list.url %> target="_blank"><%= list.url %></a>                        
                     </div>
                     <div class="grid-container">
                     <% list.items.forEach(item => { %>
@@ -72,7 +74,7 @@
                                     <textarea id="editName" name="editName" class="item-details center"><%= item.altName %></textarea> 
                                     <div class="item-footer">
                                         <p>$<%= item.price %></p> 
-                                        <input id="submit-button" type="submit" value="Save"/> 
+                                        <input class="button" id="submit-button" type="submit" value="Save"/> 
                                     </div>                            
                                 </form>
                             </div>    

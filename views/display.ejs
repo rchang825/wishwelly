@@ -3,9 +3,9 @@
     <h1 class="center-text list-title"> <%= wishwelly.title %></h1>
     <div class="toggled-buttons">
         <form method="post" action="/reset">
-            <input type="submit" id="resetButton" value="Reset demo data"></input>
+            <input class="button" type="submit" id="resetButton" value="Reset demo data"></input>
             <a href= "/collections/<%= wishwelly.slug %>/edit" class="noDecor">
-                <input type="button" value="Edit items and add new lists"></input>
+                <input class="button" type="button" value="Edit items and add new lists"></input>
             </a>
         </form>
     </div>
@@ -26,7 +26,7 @@
             <% }); %>            
             </div>
 
-            <div class="filter-section">
+            <!-- <div class="filter-section">
                 <label class="label-title">Tag</label>
                 <div>
                     <input onChange="this.form.submit()" type="checkbox" name="tag" id="clothing" value="clothing" >
@@ -40,7 +40,7 @@
                     <input onChange="this.form.submit()" type="checkbox" name="tag" id="decor" value="decor">
                     <label for="decor">Decor</label>            
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </form>
@@ -51,7 +51,7 @@
                 <% lists.forEach(list => { %>
                     <div class="store-header">
                         <h3 class="store"><%= list.storeName %></h3>
-                        <a href=<%= list.url %> target="_blank"><%= list.url %></a>                        
+                        <a class="link-style" href=<%= list.url %> target="_blank"><%= list.url %></a>                        
                     </div>
 
  

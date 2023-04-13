@@ -3,10 +3,31 @@ const cheerio = require("cheerio");
 const {Item, List} = require("../models");
 
 async function scrape(url) {
+    
     const response = await axios.get(url, {
         headers: {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"}
     });
+    let domain = "";
+    if(url.includes("amazon.com")) {
+        domain = "Amazon";
+    } else if(url.includes("etsy.com")) {
+        domain = "Etsy";
+    }
     const $ = cheerio.load(response.data);
+
+
+    switch(domain) {
+        case "Amazon":
+            return scrapeAmazon($);
+            break;
+        case "Etsy":
+            scrapeEtsy($);
+            break;
+    }
+
+}
+
+function scrapeAmazon($) {
     const $items = $("ul#g-items li.g-item-sortable");
     const scrapedItems = $items.toArray().map((element) => {
         const item = {};
@@ -17,7 +38,7 @@ async function scrape(url) {
         return item;
     });
     //console.log("scrapedItems", scrapedItems);
-    return scrapedItems;
+    return scrapedItems;    
 }
 
 async function scrapeAndCreateList(listURL) {
