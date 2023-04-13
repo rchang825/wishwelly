@@ -34,12 +34,20 @@ app.get("/collections/:slug", async (req, res) => {
         res.redirect(requestedSlug + "/edit");
         return;
     }
-    let lists = wish.lists;
+    let lists = wish.lists.sort((a, b) => {
+        if (a.storeName < b.storeName) {
+            return -1;
+        }
+        if (a.storeName > b.storeName) {
+            return 1;
+        }
+        return 0;
+    });
     //console.log("stores:", stores);
+    const storeNames = lists.map(list => list.storeName);
     if (stores) {
         lists = lists.filter(list => stores.includes(list.storeName));
     }
-    const storeNames = lists.map(list => list.storeName);
     const storeFilters = new Set(storeNames);
     res.render("display", {
         wishwelly: wish, 
@@ -56,11 +64,19 @@ app.get("/collections/:slug/edit", async (req, res) => {
     const stores = req.query.store;
     
 
-    let lists = wish.lists;
+    let lists = wish.lists.sort((a, b) => {
+        if (a.storeName < b.storeName) {
+            return -1;
+        }
+        if (a.storeName > b.storeName) {
+            return 1;
+        }
+        return 0;
+    });
+    const storeNames = lists.map(list => list.storeName);
     if (stores) {
         lists = lists.filter(list => stores.includes(list.storeName));   
     }
-    const storeNames = lists.map(list => list.storeName);
     const storeFilters = new Set(storeNames);
     res.render("edit", {
         wishwelly: wish, 

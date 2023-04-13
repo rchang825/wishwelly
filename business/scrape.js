@@ -7,21 +7,27 @@ async function scrape(url) {
     const response = await axios.get(url, {
         headers: {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"}
     });
-    let domain = "";
+    let store = "";
     if(url.includes("amazon.com")) {
-        domain = "Amazon";
+        store = "Amazon";
     } else if(url.includes("etsy.com")) {
-        domain = "Etsy";
+        store = "Etsy";
     }
     const $ = cheerio.load(response.data);
 
 
-    switch(domain) {
+    switch(store) {
         case "Amazon":
-            return scrapeAmazon($);
+            return {
+                scrapedItems: scrapeAmazon($),
+                storeName: store
+            };
             break;
         case "Etsy":
-            scrapeEtsy($);
+            return {
+                scrapedItems: scrapeEtsy($),
+                storeName: store
+            };
             break;
     }
 
@@ -41,8 +47,26 @@ function scrapeAmazon($) {
     return scrapedItems;    
 }
 
+function scrapeEtsy($) {
+    const $items = $("li.v2-listing-card");
+    const scrapedItems = $items.toArray().map((element) => {
+        const item = {};
+        item.price = $(element).find("div.n-listing-card__price p.lc-price span.currency-value").text();
+        console.log("wat dis: ", $(element).find("div.n-listing-card__price p.lc-price span.currency-value").text());
+        item.name = $(element).find("a.listing-link").prop("title");
+        item.imgURL = $(element).find("div.height-placeholder img").prop("src");
+        item.link = $(element).find("a.listing-link").prop("href");
+        return item;
+    });
+    // console.log("scraped items:", scrapedItems);
+    return scrapedItems;
+}
+
+
+
 async function scrapeAndCreateList(listURL) {
-    const scrapedItems = await scrape(listURL);
+    const scrapedData = await scrape(listURL);
+    const {scrapedItems, storeName} = scrapedData;
     const items = [];
     scrapedItems.forEach(async scrapedItem => {
         const item = new Item({
@@ -58,7 +82,7 @@ async function scrapeAndCreateList(listURL) {
 
     const list = new List({
         url: listURL,
-        storeName: "Amazon",
+        storeName: storeName,
         items: items
     });
     await list.save();   
