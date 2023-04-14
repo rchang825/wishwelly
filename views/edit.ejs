@@ -9,15 +9,25 @@
         </p>
     <% } %>
 
-
-    <form method="get" action="./new">
-        <div>
+    <div class="flex-options">
+        <form class="form-block" method="get" action="./new">
             <label for="newLink">Import new list</label>
-            <input type="text" id="newLink" name="newLink" placeholder="Link to new list" value="https://www.amazon.com/hz/wishlist/ls/2RAF9Y78RJ8DW?ref_=wl_share" required>
+            <input type="text" id="newLink" name="newLink" placeholder="Link to new list" required>
             <input class="button" type="submit" value="Add list">
-        </div>
-    </form>
+        </form>
+        <div class="form-block">OR</div>
+        <form class="form-block" method="get" action="./new">
+            <label for="demo-links">Import a demo link: </label>
+            <select name="newLink" id="demo-links" required>
+                <option value="https://www.amazon.com/hz/wishlist/ls/2RAF9Y78RJ8DW?ref_=wl_share">Amazon 1</option>
+                <option value="https://www.amazon.com/hz/wishlist/ls/2R80WOFDLF03M?ref_=wl_share">Amazon 2</option>
+                <option value="https://www.etsy.com/people/t8e56emk726fqe3q/favorites/wishlist?ref=cl_share_button">Etsy 1</option>
+            </select>
+            <input class="button" type="submit" value="Add demo list">
+        </form>
+    </div>
 </div>
+    
 
 <div class="inline-flex full-width">
     <% if (lists.length != 0) { %>

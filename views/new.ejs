@@ -2,28 +2,16 @@
 
 <h1 class="center-text list-title"> <%= wishwelly.title %></h1>
 
-<div class="edit">
-    <form method="get" action="./new">
-        <div>
-            <label for="newLink">Import new list</label>
-            <input type="text" id="newLink" name="newLink" placeholder="Link to new list" required>
-            <input class="button" type="submit" value="Add list">
-        </div>
-
-    </form>
+<div class="edit">    
     <p>
-        <br>
-        Here are all the items from the selected <%= list.storeName %> list
-        <br>
+        Here are all the items from the imported <%= list.storeName %> list: 
     </p>
-    <p>
-        <a href= "edit" class="noDecor">
-            <input class="button" type="button" value="Edit full wishlist"></input>
-        </a>
-        <a href="." class="noDecor">
-            <input class="button" type="button" value="View full wishlist"></input>
-        </a>
-    </p>
+    <a href= "edit" class="noDecor">
+        <input class="button" type="button" value="Edit full wishlist"></input>
+    </a>
+    <a href="." class="noDecor">
+        <input class="button" type="button" value="View full wishlist"></input>
+    </a>     
 </div>
 <div class="inline-flex">
     <div class="body no-filter">

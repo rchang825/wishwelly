@@ -78,7 +78,7 @@ form.filter {
     width: 10%;
 }
 .body {
-    width: 90%;
+    width: 85%;
 }
 h1.list-title {
     margin-top: 2%;
@@ -92,7 +92,7 @@ a.noDecor {
 }
 .edit {
     display: block;
-    margin-left: 15.8%;
+    margin: 2% 15.8%;
 }
 .full-width {
     width: 100%;
@@ -130,4 +130,38 @@ textarea.item-details {
 .button:hover {
     color: lightskyblue;
     background-color: white;
+}
+.spacer {
+    padding: 5%;
+}
+.form-block {
+    margin: 0.5%;
+}
+.flex-options {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.screenshot {
+    max-width: 60%;
+    padding-left: 5%;
+}
+.home {
+    display: inline-flex;
+    align-items: start;
+    justify-content: space-between;
+}
+.subheading {
+    font-size: 1.75rem;
+    line-height: 1em;
+}
+.giant-heading {
+    font-size: 4.5rem;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    line-height: 90%;
+}
+.demo-description input{
+    font-size: 1.5rem;
+    padding: 1% 5%;
 }

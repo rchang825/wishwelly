@@ -52,7 +52,6 @@ function scrapeEtsy($) {
     const scrapedItems = $items.toArray().map((element) => {
         const item = {};
         item.price = $(element).find("div.n-listing-card__price p.lc-price span.currency-value").text();
-        console.log("wat dis: ", $(element).find("div.n-listing-card__price p.lc-price span.currency-value").text());
         item.name = $(element).find("a.listing-link").prop("title");
         item.imgURL = $(element).find("div.height-placeholder img").prop("src");
         item.link = $(element).find("a.listing-link").prop("href");

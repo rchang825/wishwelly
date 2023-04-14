@@ -113,7 +113,7 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/signin", (req, res) => {
-    res.send("Sign in page");
+    res.render("signin", {});
 });
 
 app.post("/:listID/:itemID", async (req, res) => {
@@ -129,6 +129,7 @@ app.post("/:listID/:itemID", async (req, res) => {
     item.altName = newName;
     await list.save();
     //res.redirect("/collections/wish1");
+    res.sendStatus(200);
 });
 
 
