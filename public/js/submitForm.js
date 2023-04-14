@@ -20,6 +20,24 @@ $(function () {
             }
         });
     });
+
+    $("img#delete").on("click", function() {
+        console.log("delete triggered!");
+        const listID = $(this).data("list-to-delete");
+        console.log("passed in list ID:", listID);
+        $.ajax({
+            type: "DELETE",
+            url: "/lists/" + listID,
+            success: function(response) {
+                $("div#list-" + listID).slideUp();
+                //$("div#list-" + listID).remove();
+                console.log("removed from UI!");
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    });
 });
 
 

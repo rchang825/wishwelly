@@ -165,3 +165,10 @@ textarea.item-details {
     font-size: 1.5rem;
     padding: 1% 5%;
 }
+img#delete {
+    cursor: pointer;
+    max-width: 2rem;
+}
+.error {
+    margin: 2%;
+}

@@ -1,4 +1,11 @@
 <%- include("partials/header") -%>
+<%= console.log("errorCode", errorCode); %>
+<% if(errorCode === "unknown-site") {%>
+    <div class="alert alert-danger center-text error" role="alert">
+        Unable to add site! Please only add Amazon wishlists (<em>amazon.com</em>) and Etsy collections (<em>etsy.com</em>).
+    </div>
+<% } %>
+
 
 <h1 class="center-text list-title"> <%= wishwelly.title %></h1>
 <% const link = "/collections/" + slug; %>
@@ -67,30 +74,38 @@
     <div class="body">
         <div class="margins">
                 <% lists.forEach(list => { %>
-                    <div class="store-header">
-                        <h3 class="store"><%= list.storeName %></h3>
-                        <a class="link-style" href=<%= list.url %> target="_blank"><%= list.url %></a>                        
-                    </div>
-                    <div class="grid-container">
-                    <% list.items.forEach(item => { %>
-                        <div class="grid-item">
-                            <a class="noDecor" href= <%= item.link %> target="_blank">
-                                <div class="image-container">
-                                    <img class="image" src= "<%= item.imgURL %>" alt="NA">
-                                </div>                            
-                            </a>
-                            <div id="edit-form" class="details-container">
-                                <form name="editItem" id="editItem" action="" data-update-path=<%= "/" + list._id + "/" + item._id %>>
-                                    <textarea id="editName" name="editName" class="item-details center"><%= item.altName %></textarea> 
-                                    <div class="item-footer">
-                                        <p>$<%= item.price %></p> 
-                                        <input class="button" id="submit-button" type="submit" value="Save"/> 
-                                    </div>                            
-                                </form>
-                            </div>    
+                    <div id=<%= "list-" + list._id %>>
+                        <div class="store-header">
+                            <h3 class="store"><%= list.storeName %></h3>
+                            <div>
+                                <a class="link-style" href=<%= list.url %> target="_blank"><%= list.url %></a> 
+                                <%= console.log("current list id:", list._id ); %>
+                                <img id="delete" src="/media/delete.png" data-list-to-delete=<%= list._id %> title="Remove entire list">                                
+                            </div>
+
                         </div>
-                    <% }); %>
+                        <div class="grid-container">
+                        <% list.items.forEach(item => { %>
+                            <div class="grid-item">
+                                <a class="noDecor" href= <%= item.link %> target="_blank">
+                                    <div class="image-container">
+                                        <img class="image" src= "<%= item.imgURL %>" alt="NA">
+                                    </div>                            
+                                </a>
+                                <div id="edit-form" class="details-container">
+                                    <form name="editItem" id="editItem" action="" data-update-path=<%= "/" + list._id + "/" + item._id %>>
+                                        <textarea id="editName" name="editName" class="item-details center"><%= item.altName %></textarea> 
+                                        <div class="item-footer">
+                                            <p>$<%= item.price %></p> 
+                                            <input class="button" id="submit-button" type="submit" value="Save"/> 
+                                        </div>                            
+                                    </form>
+                                </div>    
+                            </div>
+                        <% }); %>
+                        </div>
                     </div>
+                    
                 <% }); %>
         </div>
     </div>

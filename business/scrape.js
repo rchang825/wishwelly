@@ -3,16 +3,17 @@ const cheerio = require("cheerio");
 const {Item, List} = require("../models");
 
 async function scrape(url) {
-    
-    const response = await axios.get(url, {
-        headers: {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"}
-    });
     let store = "";
     if(url.includes("amazon.com")) {
         store = "Amazon";
     } else if(url.includes("etsy.com")) {
         store = "Etsy";
+    } else {
+        return;
     }
+    const response = await axios.get(url, {
+        headers: {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"}
+    });
     const $ = cheerio.load(response.data);
 
 
@@ -29,6 +30,9 @@ async function scrape(url) {
                 storeName: store
             };
             break;
+        default:
+            return;
+            
     }
 
 }
@@ -65,6 +69,9 @@ function scrapeEtsy($) {
 
 async function scrapeAndCreateList(listURL) {
     const scrapedData = await scrape(listURL);
+    if(scrapedData == null) {
+        return;
+    }
     const {scrapedItems, storeName} = scrapedData;
     const items = [];
     scrapedItems.forEach(async scrapedItem => {
@@ -91,6 +98,9 @@ async function scrapeAndCreateList(listURL) {
 
 async function scrapeToWishwelly(listURL, wishwelly) {
     const scrapedData = await scrapeAndCreateList(listURL);
+    if(scrapedData == null) {
+        return;
+    }
     const list = scrapedData;
     wishwelly.lists.push(list);
     await wishwelly.save();

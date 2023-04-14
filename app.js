@@ -20,7 +20,6 @@ app.use(express.static("public"));
 //connect mongoose and set up schemas
 mongoose.connect("mongodb://localhost:27017/wishwellyDB");
 
-
 app.get("/", (req, res) => {
     res.render("home", {});
 });
@@ -63,7 +62,6 @@ app.get("/collections/:slug/edit", async (req, res) => {
     const wish = await Wishwelly.findOne({slug: requestedSlug}).populate("lists");
     const stores = req.query.store;
     
-
     let lists = wish.lists.sort((a, b) => {
         if (a.storeName < b.storeName) {
             return -1;
@@ -83,7 +81,8 @@ app.get("/collections/:slug/edit", async (req, res) => {
         lists: lists,
         storeFilters: storeFilters,
         selectedStores: stores,
-        slug: requestedSlug
+        slug: requestedSlug,
+        errorCode: req.query.errorCode
     });
 });
 
@@ -93,11 +92,15 @@ app.get("/collections/:slug/new", async (req, res) => {
     const newLink = req.query.newLink;
     const list = await scrapeToWishwelly(newLink, wish);
     //const redirectLink = "/collections/" + requestedSlug
-    res.render("new", {
-        wishwelly: wish, 
-        list: list, 
-        slug: requestedSlug
-    });
+    if(list) {
+        res.render("new", {
+            wishwelly: wish, 
+            list: list, 
+            slug: requestedSlug
+        });
+    } else {
+        res.redirect("./edit?errorCode=unknown-site");
+    }
 });
 
 app.post("/reset", async (req, res) => {
@@ -106,6 +109,20 @@ app.post("/reset", async (req, res) => {
     const wish = await scrapeAndCreate();
     const redirectLink = "/collections/" + wish.slug;
     res.redirect(redirectLink);
+});
+
+app.delete("/lists/:listID", async (req, res) => {
+    const listID = req.params.listID;
+    //remove list from list documents
+    const list = await List.findByIdAndDelete({_id: listID});
+    console.log("deleted: ", list._id);
+    //need to also remove reference in wishwelly document
+    const wish = await Wishwelly.findOne({slug: "wish"});
+    wish.lists.pull({_id: listID});
+    await wish.save();
+    
+    //only "failure" is if could not find list, so it was already deleted
+    res.sendStatus(200);
 });
 
 app.get("/about", (req, res) => {
