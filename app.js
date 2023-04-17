@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const https = require("https");
 const axios = require('axios');
 const cheerio = require("cheerio");
+require("dotenv").config();
+
 
 const {scrape, scrapeToWishwelly} = require("./business/scrape");
 const {Tag, Item, List, Wishwelly} = require("./models");
@@ -18,7 +20,7 @@ app.use(express.static("public"));
 
 
 //connect mongoose and set up schemas
-mongoose.connect("mongodb://localhost:27017/wishwellyDB");
+mongoose.connect(process.env.DB_CONN);
 
 app.get("/", (req, res) => {
     res.render("home", {});
