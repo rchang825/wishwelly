@@ -6,10 +6,10 @@
     <p>
         Here are all the items from the imported <%= list.storeName %> list: 
     </p>
-    <a href= "edit" class="noDecor">
+    <a href= "edit" class="no-decor">
         <input class="button" type="button" value="Edit full wishlist"></input>
     </a>
-    <a href="." class="noDecor">
+    <a href="." class="no-decor">
         <input class="button" type="button" value="View full wishlist"></input>
     </a>     
 </div>
@@ -19,14 +19,14 @@
             <div class="grid-container">
                 <% list.items.forEach(item => { %>
                     <div class="grid-item">
-                        <a class="noDecor" href= <%= item.link %> target="_blank">
+                        <a class="no-decor" href= <%= item.link %> target="_blank">
                             <div class="image-container">
                                 <img class="image" src= "<%= item.imgURL %>" alt="NA">
                             </div>                            
                         </a>
 
                         <div class="details-container">
-                            <a class="noDecor" href= <%= item.link %> target="_blank">
+                            <a class="no-decor" href= <%= item.link %> target="_blank">
                                 <h5 class=item-details><%= item.name %></h5>
                             </a>
                             
