@@ -1,5 +1,4 @@
 <%- include("partials/header") -%>
-<%= console.log("errorCode", errorCode); %>
 <% if(errorCode === "unknown-site") {%>
     <div class="alert alert-danger center-text error" role="alert">
         Unable to add site! Please only add Amazon wishlists (<em>amazon.com</em>) and Etsy collections (<em>etsy.com</em>).
@@ -97,7 +96,9 @@
                                         <textarea id="editName" name="editName" class="item-details center"><%= item.altName %></textarea> 
                                         <div class="item-footer">
                                             <p>$<%= item.price %></p> 
-                                            <input class="button" id="submit-button" type="submit" value="Save"/> 
+                                            <div>
+                                                <button class="button save-item-btn" id="submit-button" type="submit">Save</button> 
+                                            </div>
                                         </div>                            
                                     </form>
                                 </div>    

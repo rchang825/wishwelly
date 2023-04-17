@@ -172,3 +172,6 @@ img#delete {
 .error {
     margin: 2%;
 }
+.save-item-btn {
+    min-width: 4.25rem;
+}

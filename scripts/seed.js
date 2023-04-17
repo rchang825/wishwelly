@@ -7,7 +7,7 @@ const {scrapeAndCreateList} = require("../business/scrape");
 const {Tag, Item, List, Wishwelly, User} = require("../models");
 
 async function main() {
-    await mongoose.connect("mongodb://localhost:27017/wishwellyDB");
+    await mongoose.connect(process.env.DB_CONN);
     await scrapeAndCreate();
     //process.exit();
 }
